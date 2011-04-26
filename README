@@ -1,14 +1,17 @@
+CloudASP
+========
 
-Read the LICENSE file for information about which license this product
-is distributed under.
-
-See docs/INSTALL.txt for installation instructions.
-
-See docs/COMPILING.txt for compiling from source.
-
-See docs/TESTING.txt for info on how to test ArrowHead.
-
-See the home page (http://www.tripi.com/arrowhead) for more information.
+In short, CloudASP is an ASP implementation for cloudfoundry.com, with MySQL as backend. This is implemented in a Java Servlet.
+Only VBscript is supported.
 
 
-This file was modified by IntelliJ IDEA 10.0.3 for binding GitHub repository
+System Requirements
+-------------------
+
+Any servlet container should do. Minimum memory for the VM is 128MB, but if you are going to create the next Facebook killer, you'll need more ;-).
+
+
+Installation
+------------
+
+Visit cfasp.cloudfoundry.com for more info, and prebuild packages. These are the "asp_core.jar" sources.
