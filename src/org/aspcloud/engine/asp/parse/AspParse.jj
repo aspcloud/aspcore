@@ -1,0 +1,54 @@
+/*
+ *  CloudASP
+ *  Adapted for the cloud by Yvan JANSSENS
+ *  Based on Arrowhead ASP 0.2.3
+ *
+ *  Licensed under the GNU GPL
+ */
+options {
+    IGNORE_CASE = true;
+    UNICODE_INPUT = true;
+    STATIC = false;
+    BUILD_PARSER = false;
+}
+
+PARSER_BEGIN(AspParse)
+package org.aspcloud.engine.asp.parse;
+
+import org.aspcloud.engine.asp.*;
+
+public class AspParse {
+}
+
+PARSER_END(AspParse)
+
+TOKEN :
+{
+    < INCLUDE : "<!--" (<WS>)* "#include" (<WS>)* ("virtual"|"file")
+        (<WS>)* "=" (<WS>)* ( <FILENAME> | <QUOTEDFILENAME> ) (<WS>)* "-->" >
+|   < HTML : "<!" | "</S" | (~["<"] | "<" ~["!","%","/"] | "</" ~["S"] )+ >
+|   < LANGUAGEDEF : <STARTASP> (<WS>)* "@" (<NOTENDASP>)* <ENDASP> >
+|   < OUTPUTSCRIPT : <STARTASP> (<WS>)* "=" (<NOTENDASP>)* <ENDASP> >
+|   < ASPSCRIPT : <STARTASP> (<NOTENDASP>)* <ENDASP> >
+|   < SERVERSCRIPT : <SCRIPTSTART> (<NOTSCRIPTEND>)* <SCRIPTEND> >
+|   < #NOTSTARTASP : (~["<"] | ( "<" ~["%"] ) ) >
+|   < #NOTENDASP : (~["%"] | ( "%" ~[">"] ) ) >
+|   < #STARTASP : "<" "%" >
+|   < #ENDASP : "%" ">" >
+|   < #WS : " " | "\n" | "\r" | "\t" >
+|   < #FILENAME : ( ~["%"," ",">"] )* >
+|   < #QUOTEDFILENAME : "\"" ( ~["\""] )* "\"" >
+|   < #PARAM : ( ~["\""] ( ~[" ",">"] )* ) | ( "\"" ( ~["\""] )* "\"" ) >
+|   < #LANGUAGEPARAM : "LANGUAGE" (<WS>)* "=" <PARAM> >
+|   < #RUNATPARAM : "RUNAT" (<WS>)* "=" ( "SERVER" | "\"SERVER\"" ) >
+|   < #SCRIPTSTART : ( "<" (<WS>)* "SCRIPT" (<WS>)+ <LANGUAGEPARAM> (<WS>)+
+        <RUNATPARAM> (<WS>)* ">" ) |
+        ( "<" (<WS>)* "SCRIPT" (<WS>)+ <RUNATPARAM> (<WS>)+
+            <LANGUAGEPARAM> (<WS>)* ">" ) >
+|   < #NOTSCRIPTEND : ( ~["<"] | "<" ~["/"] | "</" ~["S"] | "</S" ~["C"] |
+        "</SC" ~["R"] | "</SCR" ~["I"] | "</SCRI" ~["P"] | "</SCRIP" ~["T"] |
+        "</SCRIPT" ~[">"] ) >
+|   < #SCRIPTEND : "</SCRIPT>" >
+}
+
+
