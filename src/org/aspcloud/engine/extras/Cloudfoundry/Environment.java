@@ -49,10 +49,10 @@ public class Environment {
 	    	JSONObject creds = null;
 	    	Iterator itr = mysql.iterator();
 	    	while (itr.hasNext()) {
-	    		JSONObject element = ((JSONObject)itr.next()).getJSONObject("credentials");
+	    		JSONObject element = ((JSONObject)itr.next());
 	    		if (element.getString("name").toLowerCase().equals(serviceName.toLowerCase()))
 	    		{
-	    			creds = element;
+	    			creds = element.getJSONObject("credentials");
 	    			break;
 	    		}
 	    	}
